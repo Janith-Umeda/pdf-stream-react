@@ -28,6 +28,24 @@ app.get('/api/pdf/:pdfFileName',(req,res)=>{
     
 })
 
+let count = 0;
+app.get("/api/count",(req,res)=>{
+    count ++;
+
+    res.json({
+        count:count
+    })
+})
+
+app.get("/api/reset",(req,res)=>{
+    const old = count; 
+    count = 0;
+    res.json({
+        count:count,
+        old:old
+    })
+})
+
 app.listen(app.get("port"),()=>{console.log(`Server booted on ${app.get("port")}`)})
 
 module.exports = app;
