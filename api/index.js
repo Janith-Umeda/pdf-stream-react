@@ -6,7 +6,7 @@ const BUCKET_PATH = "https://oqg-dev.nyc3.cdn.digitaloceanspaces.com/uploads/pdf
 
 app.set("port",(process.env.PORT || 8082));
 
-app.get('/api/pdf/:pdfFileName',(req,res)=>{
+app.get('/content/pdf/:pdfFileName',(req,res)=>{
 
     const {pdfFileName} = req.params;
     https.get(`${BUCKET_PATH}${pdfFileName}`,(pdfRes)=>{
