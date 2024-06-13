@@ -1,6 +1,9 @@
 {
     "rewrites": [
         { "source": "/api/(.*)", "destination": "/api" },
-        { "source": "/content/(.*)", "destination": "/api" }
+        {
+            "source":"/content/:match*",
+            "destination":"https://oqg-dev.nyc3.cdn.digitaloceanspaces.com/:match*"
+        }
     ]
 }
