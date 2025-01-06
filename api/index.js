@@ -1,3 +1,4 @@
+require("dotenv").configDotenv({path:"../.env"});
 const express = require("express");
 const app = express();
 const https = require("https");
@@ -43,6 +44,14 @@ app.get("/api/reset",(req,res)=>{
     res.json({
         count:count,
         old:old
+    })
+})
+
+app.get("/api/env",(req,res)=>{
+    res.json({
+        REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+        REACT_APP_API_KEY: process.env.REACT_APP_API_KEY,
+        REACT_APP_ENV: process.env.REACT_APP_ENV,
     })
 })
 
