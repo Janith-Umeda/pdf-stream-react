@@ -66,8 +66,7 @@ app.get("/api/env", (req, res) => {
 // IP address endpoint with proper parsing
 app.get("/api/ip", (req, res) => {
     const forwardedIp = req.headers['x-forwarded-for'];
-    const ip = forwardedIp ? forwardedIp.split(',')[0].trim() : 
-               req.socket.remoteAddress?.replace(/^::ffff:/, '');
+    const ip = forwardedIp ? forwardedIp.split(',')[0].trim() : req.socket.remoteAddress?.replace(/^::ffff:/, '');
     
     res.status(200).json({ ip: ip || 'unknown' });
 });
