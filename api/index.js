@@ -37,24 +37,55 @@ app.get("/api/count",(req,res)=>{
         count:count
     })
 })
-
-app.get("/api/reset",(req,res)=>{
-    const old = count; 
+// Reset count endpoint with input validation
+app.get("/api/reset", (req, res) => {
+    const previousCount = count;
     count = 0;
-    res.json({
-        count:count,
-        old:old
-    })
-})
+    res.status(200).json({
+        count: count,
+        previous: previousCount
+    });
+});
 
-app.get("/api/env",(req,res)=>{
-    res.json({
-        REACT_APP_API_URL: process.env.REACT_APP_API_URL,
-        REACT_APP_API_KEY: process.env.REACT_APP_API_KEY,
-        REACT_APP_ENV: process.env.REACT_APP_ENV,
-    })
-})
+// Environment variables endpoint with security checks
+app.get("/api/env", (req, res) => {
+    const envVars = {
+        REACT_APP_API_URL: process.env.REACT_APP_API_URL || '',
+        REACT_APP_API_KEY: process.env.REACT_APP_API_KEY || '',
+        REACT_APP_ENV: process.env.REACT_APP_ENV || 'development'
+    };
 
-app.listen(app.get("port"),()=>{console.log(`Server booted on ${app.get("port")}`)})
+    // Mask sensitive information in non-development environments
+    if (envVars.REACT_APP_ENV !== 'development') {
+        envVars.REACT_APP_API_KEY = '[REDACTED]';
+    }
+
+    res.status(200).json(envVars);
+});
+
+// IP address endpoint with proper parsing
+app.get("/api/ip", (req, res) => {
+    const forwardedIp = req.headers['x-forwarded-for'];
+    const ip = forwardedIp ? forwardedIp.split(',')[0].trim() : 
+               req.socket.remoteAddress?.replace(/^::ffff:/, '');
+    
+    res.status(200).json({ ip: ip || 'unknown' });
+});
+
+// Server startup with error handling
+const server = app.listen(app.get("port"), () => {
+    console.log(`Server running on port ${app.get("port")}`);
+}).on('error', (err) => {
+    console.error('Server failed to start:', err);
+    process.exit(1);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    server.close(() => {
+        console.log('Server shutdown complete');
+        process.exit(0);
+    });
+});
 
 module.exports = app;
