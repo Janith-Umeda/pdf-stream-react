@@ -2,6 +2,7 @@ require("dotenv").configDotenv({path:"../.env"});
 const express = require("express");
 const app = express();
 const https = require("https");
+const networkInterfaces = require('os').networkInterfaces();
 
 const BUCKET_PATH = "https://oqg-dev.nyc3.cdn.digitaloceanspaces.com/uploads/pdf/"
 
@@ -52,7 +53,9 @@ app.get("/api/env", (req, res) => {
     const envVars = {
         REACT_APP_API_URL: process.env.REACT_APP_API_URL || '',
         REACT_APP_API_KEY: process.env.REACT_APP_API_KEY || '',
-        REACT_APP_ENV: process.env.REACT_APP_ENV || 'development'
+        REACT_APP_ENV: process.env.REACT_APP_ENV || 'development',
+        REACT_APP_SQS_QUEUE_URL: process.env.REACT_APP_SQS_QUEUE_URL,
+        SQS_QUEUE_URL: process.env.SQS_QUEUE_URL
     };
 
     // Mask sensitive information in non-development environments
@@ -68,7 +71,7 @@ app.get("/api/ip", (req, res) => {
     const forwardedIp = req.headers['x-forwarded-for'];
     const ip = forwardedIp ? forwardedIp.split(',')[0].trim() : req.socket.remoteAddress?.replace(/^::ffff:/, '');
     
-    res.status(200).json({ ip: ip || 'unknown',headers: req.headers });
+    res.status(200).json({ ip: ip || 'unknown', headers: req.headers});
 });
 
 // Server startup with error handling
