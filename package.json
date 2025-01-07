@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.723.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.19.2",
+    "php-serialization": "^0.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "uuid": "^11.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
