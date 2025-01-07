@@ -5,10 +5,10 @@ class AnalyticsController {
 
     sqsClient;
     static sqsClientConnection;
-    #region =  process.env.AWS_DEFAULT_REGION;
-    #accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-    #secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-    #queueUrl = process.env.SQS_QUEUE;
+    #region =  process.env.DEFAULT_REGION;
+    #accessKeyId = process.env.ACCESS_KEY_ID;
+    #secretAccessKey = process.env.SECRET_ACCESS_KEY;
+    #queueUrl = process.env.QUEUE;
 
     /**
      * 
@@ -20,12 +20,10 @@ class AnalyticsController {
         const ip = this.#getIpAddress(req);
         
         console.log({
-            region:  process.env.AWS_DEFAULT_REGION,
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            queueUrl: process.env.SQS_QUEUE,
-            AWSqueueUrl: process.env.AWS_SQS_QUEUE_URL,
-            RAPP_AWSqueueUrl: process.env.REACT_APP_AWS_SQS_QUEUE_URL,
+            region:  process.env.DEFAULT_REGION,
+            accessKeyId: process.env.ACCESS_KEY_ID,
+            secretAccessKey: process.env.SECRET_ACCESS_KEY,
+            queueUrl: process.env.QUEUE,
         });
 
         try{
