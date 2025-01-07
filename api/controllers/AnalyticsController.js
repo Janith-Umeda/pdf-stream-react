@@ -8,7 +8,7 @@ class AnalyticsController {
     #region =  process.env.AWS_DEFAULT_REGION;
     #accessKeyId = process.env.AWS_ACCESS_KEY_ID;
     #secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-    #queueUrl = process.env.SQS_QUEUE_URL;
+    #queueUrl = process.env.SQS_QUEUE;
 
     /**
      * 
@@ -23,7 +23,7 @@ class AnalyticsController {
             region:  process.env.AWS_DEFAULT_REGION,
             accessKeyId: process.env.AWS_ACCESS_KEY_ID,
             secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            queueUrl: process.env.SQS_QUEUE_URL,
+            queueUrl: process.env.SQS_QUEUE,
             AWSqueueUrl: process.env.AWS_SQS_QUEUE_URL,
             RAPP_AWSqueueUrl: process.env.REACT_APP_AWS_SQS_QUEUE_URL,
         });
@@ -48,6 +48,7 @@ class AnalyticsController {
                     reason:'Payload Failed to send!',
                     qId:req.body.qr_code_id,
                     ip,
+                    envs:process.env
                 });
             })
 
