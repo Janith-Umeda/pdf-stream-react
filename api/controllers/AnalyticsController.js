@@ -5,10 +5,10 @@ class AnalyticsController {
 
     sqsClient;
     static sqsClientConnection;
-    #region =  process.env.DEFAULT_REGION;
-    #accessKeyId = process.env.ACCESS_KEY_ID;
-    #secretAccessKey = process.env.SECRET_ACCESS_KEY;
-    #queueUrl = process.env.QUEUE;
+    #region =  process.env.DEFAULT_REGION_AWS;
+    #accessKeyId = process.env.ACCESS_KEY_ID_AWS;
+    #secretAccessKey = process.env.SECRET_ACCESS_KEY_AWS;
+    #queueUrl = process.env.QUEUE_URL_AWS;
 
     /**
      * 
@@ -19,13 +19,6 @@ class AnalyticsController {
 
         const ip = this.#getIpAddress(req);
         
-        console.log({
-            region:  process.env.DEFAULT_REGION,
-            accessKeyId: process.env.ACCESS_KEY_ID,
-            secretAccessKey: process.env.SECRET_ACCESS_KEY,
-            queueUrl: process.env.QUEUE,
-        });
-
         try{
             this.sqsClient = this.initConnection();
 
@@ -45,8 +38,7 @@ class AnalyticsController {
                 .json({
                     reason:'Payload Failed to send!',
                     qId:req.body.qr_code_id,
-                    ip,
-                    envs:process.env
+                    ip
                 });
             })
 
